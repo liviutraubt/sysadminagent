@@ -4,14 +4,14 @@ from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 
 
-
+#declararea agentului (oblicatoriu root_agent)
 root_agent = Agent(
-    model=LiteLlm(model="ollama_chat/llama3.2"),
-    name="SysAdminAgent",
+    model=LiteLlm(model="ollama_chat/llama3.2"), #specificarea modelului cu care interfateaza
+    name="SysAdminAgent", #numele agentului
     description="A helpful assistant for administrating Linux-based operating systems.",
-    instruction=r"""
-    When asked to greet someone, identify the name of that person,
-    call the 'greet' tool with that name, and **print ONLY the tool's returned text as your reply**.
+    instruction=r"""  #blocul unde se descrie functionalitatea agentului si modul in care acesta este 
+    When asked to greet someone, identify the name of that person, #asteptat sa raspunda la query-uri(cu 
+    call the 'greet' tool with that name, and **print ONLY the tool's returned text as your reply**. #exemple)
     Do not summarize, explain, or add extra words — output exactly what the tool returns.
     Example:
     User: Greet LiviuT
@@ -26,7 +26,7 @@ root_agent = Agent(
     Output: File content:"salut bossule"
     """,
     tools=[
-        MCPToolset(
+        MCPToolset(  #conectiunea cu serverul FastMCP prin HTTP (usor de de dockerizat ulterior)
             connection_params=StreamableHTTPConnectionParams(
                 url="http://127.0.0.1:8100/mcp",
             ),

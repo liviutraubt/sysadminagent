@@ -3,7 +3,7 @@ from os import listdir
 
 mcp = FastMCP("My MCP Server")
 
-@mcp.tool
+@mcp.tool #adnotare necesara pentru a expune tool-ul prin server
 def greet(name: str) -> str:
     return f"Hello custom function, {name}"
 
@@ -12,11 +12,11 @@ def list_directory(dir_path: str) -> list[str]:
     list = listdir(dir_path)
     return list
 
-@mcp.tool
+@mcp.tool 
 def get_file_content(file_path: str) -> str:
     with open(file_path, 'r') as file:
         file_content = file.read()
     return file_content
 
 if __name__ == "__main__":
-    mcp.run(transport="http", host="127.0.0.1", port=8100)
+    mcp.run(transport="http", host="127.0.0.1", port=8100)  #instructiunea de rulare a serverului pe modul HTTP

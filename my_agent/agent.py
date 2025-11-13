@@ -6,7 +6,7 @@ from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnecti
 
 #declararea agentului (oblicatoriu root_agent)
 root_agent = Agent(
-    model=LiteLlm(model="ollama_chat/llama3.2"), #specificarea modelului cu care interfateaza
+    model=LiteLlm(model="ollama_chat/llama3.2", base_url="http://localhost:11435"), #specificarea modelului cu care interfateaza
     name="SysAdminAgent", #numele agentului
     description="A helpful assistant for administrating Linux-based operating systems.",
     instruction=r"""  #blocul unde se descrie functionalitatea agentului si modul in care acesta este 
@@ -28,7 +28,7 @@ root_agent = Agent(
     tools=[
         MCPToolset(  #conectiunea cu serverul FastMCP prin HTTP (usor de de dockerizat ulterior)
             connection_params=StreamableHTTPConnectionParams(
-                url="http://127.0.0.1:8100/mcp",
+                url="http://localhost:8101/mcp",
             ),
             #tool_filter=["greet", "list_directory"]
         )

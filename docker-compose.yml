@@ -1,0 +1,30 @@
+name: aso-project
+services:
+  ollama:
+    build: 
+      context: ./ollama
+      dockerfile: ./Dockerfile
+    container_name: ollama
+    ports:
+      - "11435:11434"
+    volumes:
+      - ollama:/root/.ollama
+    networks:
+      aso_network:
+    
+  mcp_server:
+    build:
+      context: ./MCP_Server
+      dockerfile: ./Dockerfile
+    container_name: mcp_server
+    ports:
+      - "8101:8100"
+    networks:
+      aso_network:
+
+volumes:
+  ollama:
+
+networks:
+  aso_network:
+    external: true

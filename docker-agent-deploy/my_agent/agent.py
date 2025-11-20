@@ -6,12 +6,21 @@ from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnecti
 
 #declararea agentului (oblicatoriu root_agent)
 root_agent = Agent(
-    model=LiteLlm(model="ollama_chat/llama3.2", base_url="http://ollama:11434"), #specificarea modelului cu care interfateaza
+    model=LiteLlm(model="ollama_chat/llama3.2", base_url="http://ollama:11434", allow_tools=True, api_base="http://ollama:11434"), #specificarea modelului cu care interfateaza
     name="SysAdminAgent", #numele agentului
     description="A helpful assistant for administrating Linux-based operating systems.",
-    instruction=r"""  #blocul unde se descrie functionalitatea agentului si modul in care acesta este 
-    When asked to greet someone, identify the name of that person, #asteptat sa raspunda la query-uri(cu 
-    call the 'greet' tool with that name, and **print ONLY the tool's returned text as your reply**. #exemple)
+     #blocul unde se descrie functionalitatea agentului si modul in care acesta este 
+    instruction=r""" 
+    You are a system administration assistant.
+    
+    When asked to perform an action (like greeting or listing files):
+    1. Call the appropriate tool.
+    2. WAIT for the result.
+    3. Use the tool's output to answer the user's question.
+    
+    Do not invent information. If the tool returns a message, repeat that message to the user as your answer.
+    When asked to greet someone, identify the name of that person, 
+    call the 'greet' tool with that name, and **print ONLY the tool's returned text as your reply**. 
     Do not summarize, explain, or add extra words — output exactly what the tool returns.
     Example:
     User: Greet LiviuT

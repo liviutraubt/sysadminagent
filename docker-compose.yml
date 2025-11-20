@@ -22,6 +22,16 @@ services:
     networks:
       aso_network:
 
+  adk_agent:
+    build: 
+      context: ./docker-agent-deploy
+      dockerfile: ./Dockerfile
+    container_name: adk_agent
+    ports:
+      - "8000:8000"
+    networks:
+      aso_network:
+
 volumes:
   ollama:
 

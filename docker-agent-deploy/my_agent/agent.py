@@ -6,7 +6,7 @@ from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnecti
 
 #declararea agentului (oblicatoriu root_agent)
 root_agent = Agent(
-    model=LiteLlm(model="ollama/llama3.2", base_url="http://ollama:11434", allow_tools=True, api_base="http://ollama:11434"), #specificarea modelului cu care interfateaza
+    model=LiteLlm(model="ollama_chat/llama3.2", base_url="http://ollama:11434"), #specificarea modelului cu care interfateaza
     name="SysAdminAgent", #numele agentului
     description="A helpful assistant for administrating Linux-based operating systems.",
     instruction=r"""  #blocul unde se descrie functionalitatea agentului si modul in care acesta este 

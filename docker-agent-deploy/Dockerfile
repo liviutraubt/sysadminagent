@@ -11,4 +11,7 @@ RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
 
+ENV OLLAMA_API_BASE=http://ollama:11434
+ENV URL_MCP=http://mcp_server:8100/mcp
+
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -1,17 +1,24 @@
 import google.adk
+import os
 from google.adk.agents.llm_agent import Agent
 from google.adk.models.lite_llm import LiteLlm
 from google.adk.tools.mcp_tool.mcp_toolset import McpToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StreamableHTTPConnectionParams
 
+ollama_base = os.getenv("OLLAMA_API_BASE", "http://localhost:11434")
+mcp_url = os.getenv("URL_MCP", "http://localhost:8100/mcp")
+
 #declararea agentului (oblicatoriu root_agent)
 root_agent = Agent(
-    model=LiteLlm(model="ollama_chat/llama3.2", base_url="http://ollama:11434", allow_tools=True, api_base="http://ollama:11434"), #specificarea modelului cu care interfateaza
+    model=LiteLlm(model="ollama_chat/llama3.2", 
+                  api_base=ollama_base), #specificarea modelului cu care interfateaza
     name="SysAdminAgent", #numele agentului
     description="A helpful assistant for administrating Linux-based operating systems.",
      #blocul unde se descrie functionalitatea agentului si modul in care acesta este 
     instruction=r""" 
     You are a system administration assistant.
+    
+    Only use tools when the user **explicitly requests filesystem operations**.
     
     When asked to perform an action (like greeting or listing files):
     1. Call the appropriate tool.
@@ -37,7 +44,7 @@ root_agent = Agent(
     tools=[
         McpToolset(  #conectiunea cu serverul FastMCP prin HTTP (usor de de dockerizat ulterior)
             connection_params=StreamableHTTPConnectionParams(
-                url="http://mcp_server:8100/mcp",
+                url=mcp_url,
             ),
             #tool_filter=["greet", "list_directory"]
         )
